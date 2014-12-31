@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1410419063 source:c:\users\user\dropbox\schule\lf6 haake\programmieren\garageneinfahrt\main.c
+	<avr/io.h>
+	<stdint.h>
+	<avr/interrupt.h>
+	<util/delay.h>
+
+1414401582 source:c:\users\user\dropbox\schule\lf6 haake\programmieren\garageneinfahrt\erweitert.c
+	<avr/io.h>
+	<stdint.h>
+	<avr/interrupt.h>
+	<stdlib.h>
+	<util/delay.h>
+	"lcd-routines.h"
+	<avr/eeprom.h>
+	"uart.h"
+
+1411018313 c:\users\user\dropbox\schule\lf6 haake\programmieren\garageneinfahrt\lcd-routines.h
+
+1384421138 source:c:\users\user\dropbox\schule\lf6 haake\programmieren\garageneinfahrt\lcd-routines.c
+	<avr/io.h>
+	"lcd-routines.h"
+	<util/delay.h>
+
+1414402225 c:\users\user\dropbox\schule\lf6 haake\programmieren\garageneinfahrt\uart.h
+
