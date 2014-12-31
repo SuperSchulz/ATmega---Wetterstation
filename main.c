@@ -3,8 +3,8 @@
  * Garageneinfahrt
  *
  *  Created: 11.09.2014
- *  Author: Franz Schneider, Lars Beyer, Thomas Ngandwe
- *  Für das problemlose Compilieren muss dem Linker den Ordner "X:\WinAVR-20100110\avr\lib\avr5" angegeben bekommen
+ *  Author: Franz
+ *  FÃ¼r das problemlose Compilieren muss dem Linker den Ordner "X:\WinAVR-20100110\avr\lib\avr5" angegeben bekommen
  */
 
 /**MAKROS**/
@@ -12,22 +12,22 @@
 #include <avr/io.h>
 #include <stdint.h>
 #include <avr/interrupt.h>
-#include <stdlib.h>             //Bilbiothek für itoa(Integer zu Ascii)
+#include <stdlib.h>             //Bilbiothek fÃ¼r itoa(Integer zu Ascii)
 #include <util/delay.h>
 #include "lcd-routines.h"
 #include <avr/eeprom.h>
 #include "uart.h"
 
-/**VARIABLE**/
+/**VARIABLEN**/
 volatile uint8_t esensor,asensor,best,zeith,zeitm,zeits,alarm1h,alarm1m,alarm2h,alarm2m,poffen,alarmab,anzeigei,i = 0;
 //Uhrzeit
 char sek[4];
 char min[4];
 char std[4];
-//Öffnungszeit
+//Ã–ffnungszeit
 char al1std[4];
 char al1min[4];
-//Schließungszeit
+//SchlieÃŸungszeit
 char al2std[4];
 char al2min[4];
 
@@ -54,13 +54,13 @@ void mc_init();
 int main(void)              //Hauptroutine
 {
 
-    mc_init();                                  //µC initialisieren
+    mc_init();                                  //ÂµC initialisieren
     lcd_init();                                 //LCD initialisieren
     uart_init();                                //UART Schnittstelle initialisieren
 
     /*Zeit abfragen*/
     {
-        uart_puts("\r\n\r\nGerät hochgefahren, warte auf Benutzereingabe.\r\n");
+        uart_puts("\r\n\r\nGerÃ¤t hochgefahren, warte auf Benutzereingabe.\r\n");
         menu();
         uart_puts("Zeiteingestellt: ");
         zeitsenden();
@@ -74,16 +74,16 @@ int main(void)              //Hauptroutine
             if(alarmab==1)
                 {
                     ladedaten();
-                    uart_puts("Öffnungs-/Schließungszeiten aus EEPROM geladen!\r\n");
+                    uart_puts("Ã–ffnungs-/SchlieÃŸungszeiten aus EEPROM geladen!\r\n");
                 }
             if(alarmab==0)
                 {
                     alarm1menu();
-                    uart_puts("Öffnungszeit eingestellt: ");
+                    uart_puts("Ã–ffnungszeit eingestellt: ");
                     alarm1senden();
                     uart_puts("\r\n");
                     alarm2menu();
-                    uart_puts("Schließungszeit eingestellt:!\r\n");
+                    uart_puts("SchlieÃŸungszeit eingestellt:!\r\n");
                     alarm2senden();
                     uart_puts("\r\n");
                     schreibedaten();
@@ -98,12 +98,12 @@ int main(void)              //Hauptroutine
         uitoa();                                //Integer zu Ascii umwandeln
         Anzeige();
         rechnung();
-        //Genaue Wünsche des Kunden müssen noch eingestellt werden
+        //Genaue WÃ¼nsche des Kunden mÃ¼ssen noch eingestellt werden
         if(poffen==1)
            {
                 PORTD |= (1<<PD6);
                 PORTD |= (1<<PD5);
-                uart_puts("\r\nEin- unxd Ausfahrt werden geöffnet!");
+                uart_puts("\r\nEin- unxd Ausfahrt werden geÃ¶ffnet!");
            }
         if(poffen==0)
         {
@@ -113,7 +113,7 @@ int main(void)              //Hauptroutine
 
                 if(asensor==1)
                 {
-                    uart_puts("\r\nAusfahrt wird auf Kundenwunsch geöffnet!");
+                    uart_puts("\r\nAusfahrt wird auf Kundenwunsch geÃ¶ffnet!");
                     PORTD |= (1<<PD5);
                     _delay_ms(500);
                     PORTD |= (1<<PD5);
@@ -145,7 +145,7 @@ ISR(TIMER0_OVF_vect)        //Interrupt - Tastenabfrage
 	{
 		asensor = 0;
 	}
-	if (PIND & (1 << PIND4))        //Bestätigung
+	if (PIND & (1 << PIND4))        //BestÃ¤tigung
 	{
 		best = 1;
 	}
@@ -155,7 +155,7 @@ ISR(TIMER0_OVF_vect)        //Interrupt - Tastenabfrage
 	}
 }
 
-ISR(TIMER1_OVF_vect)	    //Interrupt - Zeit hochzählen
+ISR(TIMER1_OVF_vect)	    //Interrupt - Zeit hochzÃ¤hlen
 {
 	TCCR1B |= (1<<CS12)|(1<<CS10);
 	TCNT1H = 0xFC;
@@ -185,7 +185,7 @@ ISR(TIMER2_OVF_vect)	    //Interrupt - Unbenutzt
 
 }
 
-void menu()                 //Eingabe Menü
+void menu()                 //Eingabe MenÃ¼
 {
     int i = 0;
     while(i != 2)
@@ -246,7 +246,7 @@ void menu()                 //Eingabe Menü
 
 }
 
-void zeitanzeigen()         //Zeigt in der gewählten Zeile die aktuelle Zeit an(für LCD)
+void zeitanzeigen()         //Zeigt in der gewÃ¤hlten Zeile die aktuelle Zeit an(fÃ¼r LCD)
 {
     if(zeith <10)
         {
@@ -267,7 +267,7 @@ void zeitanzeigen()         //Zeigt in der gewählten Zeile die aktuelle Zeit an(
         lcd_string(sek);
 }
 
-void alarm1anzeigen()       //Zeigt in der gewählten Zeile Öffnungszeit an(für LCD)
+void alarm1anzeigen()       //Zeigt in der gewÃ¤hlten Zeile Ã–ffnungszeit an(fÃ¼r LCD)
 {
     if(alarm1h <10)
         {
@@ -282,7 +282,7 @@ void alarm1anzeigen()       //Zeigt in der gewählten Zeile Öffnungszeit an(für L
         lcd_string(al1min);
 }
 
-void alarm2anzeigen()       //Zeigt in der gewählten Zeile Schließungszeit an(für LCD)
+void alarm2anzeigen()       //Zeigt in der gewÃ¤hlten Zeile SchlieÃŸungszeit an(fÃ¼r LCD)
 {
      if(alarm2h <10)
         {
@@ -298,22 +298,22 @@ void alarm2anzeigen()       //Zeigt in der gewählten Zeile Schließungszeit an(fü
 
 }
 
-void uitoa()                //Integer Zeitwerte in ASCII Umwandeln(für LCD)
+void uitoa()                //Integer Zeitwerte in ASCII Umwandeln(fÃ¼r LCD)
 {
         /*Uhrzeit */
         itoa( zeits, sek, 10 );
         itoa( zeitm, min, 10 );
         itoa( zeith, std, 10 );
-        /*Öffnungszeit */
+        /*Ã–ffnungszeit */
         itoa( alarm1m, al1min, 10 );
         itoa( alarm1h, al1std, 10 );
-        /*Schließungszeit */
+        /*SchlieÃŸungszeit */
         itoa( alarm2m, al2min, 10 );
         itoa( alarm2h, al2std, 10 );
 
 }
 
-void alarm1menu()           //Alarm Öffnungszeit einstellen
+void alarm1menu()           //Alarm Ã–ffnungszeit einstellen
 {
     int i = 0;
     lcd_clear();
@@ -374,7 +374,7 @@ void alarm1menu()           //Alarm Öffnungszeit einstellen
 
 }
 
-void alarm2menu()           //Alarm Schließungszeit einstellen
+void alarm2menu()           //Alarm SchlieÃŸungszeit einstellen
 {
     int i = 0;
     lcd_clear();
@@ -440,12 +440,12 @@ void rechnung(void)         //Alarmrechnung "Ist offen oder zu?"
     {
         if(zeith<=alarm2h && zeitm<=alarm2m)
         {
-            poffen = 1;                     //für Vergleich in main
+            poffen = 1;                     //fÃ¼r Vergleich in main
         }
     }
     else
     {
-            poffen = 0;                     //für Vergleich in main
+            poffen = 0;                     //fÃ¼r Vergleich in main
     }
 }
 
@@ -491,13 +491,13 @@ void Anzeige(void)          //LCD Anzeige Uhrzeit/Alarm1/Alarm2 - UART Uhrzeit u
                 }
                 if(i==1)
                 {
-                    uart_puts("Öffnungszeit: ");
+                    uart_puts("Ã–ffnungszeit: ");
                     alarm1senden();
                     uart_puts("\r\n");
                 }
                 if(i==2)
                 {
-                    uart_puts("Schließungszeit: ");
+                    uart_puts("SchlieÃŸungszeit: ");
                     alarm2senden();
                     uart_puts("\r\n");
                 }
@@ -552,7 +552,7 @@ void schreibedaten(void)    //Alarm in EEPROM schreiben
 
 }
 
-void zeitsenden()           //Gibt die Zeit über UART aus!
+void zeitsenden()           //Gibt die Zeit Ã¼ber UART aus!
 {
     if(zeith <10)
         {
@@ -574,7 +574,7 @@ void zeitsenden()           //Gibt die Zeit über UART aus!
         uart_puts("\r\n");
 }
 
-void alarm1senden()         //Schicke Öffnungszeit an UART
+void alarm1senden()         //Schicke Ã–ffnungszeit an UART
 {
     if(alarm1h <10)
         {
@@ -589,7 +589,7 @@ void alarm1senden()         //Schicke Öffnungszeit an UART
         uart_puts(al1min);
 }
 
-void alarm2senden()         //Schicke Schließungszeit an UART
+void alarm2senden()         //Schicke SchlieÃŸungszeit an UART
 {
      if(alarm2h <10)
         {
